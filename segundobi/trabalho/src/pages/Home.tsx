@@ -19,9 +19,12 @@ import "../styles/solution.css";
 import "../styles/testimonials.css";
 import "../styles/pricing.css";
 import "../styles/contact.css";
+import "../styles/footer.css";
+import "../styles/form.css";
 import HeroRectangleOne from "../assets/images/rectangleOne.svg";
 import HeroRectangleTwo from "../assets/images/rectangleTwo.svg";
 import TestimonialCard from "../components/TestimonialCard";
+import ContactForm from "../components/ContactForm";
 import Card from "../components/Card";
 
 export default function Home() {
@@ -157,6 +160,17 @@ export default function Home() {
                                                 href="#contact"
                                             >
                                                 Contato
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                onClick={() =>
+                                                    setShowMobileMenu(false)
+                                                }
+                                                href="#login"
+                                                className="mobile-login-btn"
+                                            >
+                                                Login
                                             </a>
                                         </li>
                                     </ul>
@@ -436,7 +450,7 @@ export default function Home() {
 
             <section id="contact" className="container">
                 <header>
-                    <p className="desktop-only">Fale Conosco</p>
+                    <span className="subtitle">Fale Conosco</span>
                     <h2>Vamos eternizar sua história?</h2>
                     <p>
                         Preencha os dados abaixo e retornaremos com um orçamento
@@ -447,11 +461,10 @@ export default function Home() {
                 <div className="contact-content">
                     <form onSubmit={sendContactEmail} className="contact-form">
                         <div className="input-group">
-                            <label htmlFor="email">Seu melhor e-mail</label>
                             <input
                                 type="email"
                                 id="email"
-                                placeholder="exemplo@email.com"
+                                placeholder="Seu melhor Email"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -459,23 +472,95 @@ export default function Home() {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="message">
-                                Sua mensagem (Data, tipo de ensaio, etc)
-                            </label>
                             <textarea
                                 id="message"
-                                placeholder="Conte um pouco sobre o que você deseja..."
+                                placeholder="Motivo do contato. Ex: Gostei muito do produto X, poderia me enviar um orçamento?"
                                 required
-                                rows={5}
+                                rows={3}
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                             ></textarea>
                         </div>
 
-                        <Button text="Enviar mensagem" type="submit" />
+                        <div className="btn-container">
+                            <Button text="Enviar" type="submit" />
+                        </div>
                     </form>
+                    <ContactForm />
                 </div>
             </section>
+            <footer id="footer">
+                <div className="container footer-top">
+                    <div className="footer-brand">
+                        <img
+                            src={Logo}
+                            alt="Logo LuisFotos"
+                            width={220}
+                            height={80}
+                        />
+                        <div className="social-links">
+                            <a href="#">Instagram</a>
+                            <a href="#">Facebook</a>
+                            <a href="#">YouTube</a>
+                        </div>
+                    </div>
+
+                    <div className="footer-column">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li>
+                                <a href="#">Sobre nós</a>
+                            </li>
+                            <li>
+                                <a href="#">Faça parte do time</a>
+                            </li>
+                            <li>
+                                <a href="#">Blog</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-column">
+                        <h4>Funcionalidades</h4>
+                        <ul>
+                            <li>
+                                <a href="#">Marketing</a>
+                            </li>
+                            <li>
+                                <a href="#">Análise de dados</a>
+                            </li>
+                            <li>
+                                <a href="#">Boot discord</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-column">
+                        <h4>Recursos</h4>
+                        <ul>
+                            <li>
+                                <a href="#">IOS & Android</a>
+                            </li>
+                            <li>
+                                <a href="#">Teste a Demo</a>
+                            </li>
+                            <li>
+                                <a href="#">Clientes</a>
+                            </li>
+                            <li>
+                                <a href="#">API</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="footer-bottom">
+                    <p>
+                        Feito com amor na aula de Programação Web &copy; 2026 -
+                        Todos os direitos reservados.
+                    </p>
+                </div>
+            </footer>
         </>
     );
 }

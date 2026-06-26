@@ -68,6 +68,16 @@
     right: 1.5rem;
 }
 
+.mobile-menu-content .mobile-login-btn {
+    color: #90db69;
+    font-weight: 700;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-content .mobile-login-btn:hover {
+    opacity: 0.8;
+}
+
 @media (width >= 1280px) {
     header {
         position: relative;
