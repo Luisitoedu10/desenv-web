@@ -432,6 +432,49 @@ export default function Home() {
                     </div>
                 </section>
             </section>
+
+            <section id="contact" className="container">
+                <header>
+                    <p className="desktop-only">Fale Conosco</p>
+                    <h2>Vamos eternizar sua história?</h2>
+                    <p>
+                        Preencha os dados abaixo e retornaremos com um orçamento
+                        personalizado.
+                    </p>
+                </header>
+
+                <div className="contact-content">
+                    <form onSubmit={sendContactEmail} className="contact-form">
+                        <div className="input-group">
+                            <label htmlFor="email">Seu melhor e-mail</label>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="exemplo@email.com"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="message">
+                                Sua mensagem (Data, tipo de ensaio, etc)
+                            </label>
+                            <textarea
+                                id="message"
+                                placeholder="Conte um pouco sobre o que você deseja..."
+                                required
+                                rows={5}
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            ></textarea>
+                        </div>
+
+                        <Button text="Enviar mensagem" type="submit" />
+                    </form>
+                </div>
+            </section>
         </>
     );
 }
