@@ -18,6 +18,7 @@ import "../styles/index.css";
 import "../styles/solution.css";
 import "../styles/testimonials.css";
 import "../styles/pricing.css";
+import "../styles/contact.css";
 import HeroRectangleOne from "../assets/images/rectangleOne.svg";
 import HeroRectangleTwo from "../assets/images/rectangleTwo.svg";
 import TestimonialCard from "../components/TestimonialCard";
