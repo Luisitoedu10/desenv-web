@@ -20,7 +20,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
                 <p>{props.testemunho}</p>
             </span>
             <span className="rating">
-                {listaEstrelas.map((item, indice) => (
+                {listaEstrelas.map((_, indice) => (
                     <img
                         key={indice}
                         src={Star}
@@ -29,7 +29,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
                         height={20}
                     />
                 ))}
-                {listaEstrelasVazia.map((item, indice) => (
+                {listaEstrelasVazia.map((_, indice) => (
                     <img
                         key={indice}
                         src={StarOuter}
