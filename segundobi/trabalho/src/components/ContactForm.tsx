@@ -1,105 +1,116 @@
 import { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import Button from "./Button"; 
 
 const ContactForm = () => {
-    const [formData, setFormData] = useState({ name: "", email: "" });
-    const [isChallengeCompleted, setChallengeCompleted] = useState(false);
+  
+    const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    
+
+    const [isChallengeCompleted, setChallengeCompleted] = useState(false);
+    const [statusText, setStatusText] = useState(""); 
     const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-    const isNullOrEmpty = (value: string) =>
-        value === null || value.trim() === "";
-
-    const resetFields = () => setFormData({ name: "", email: "" });
-
-    const handleSendEmail = async () => {
-        const response = await fetch("/api/send-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: formData.email,
-                message: formData.name,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error("Erro ao enviar mensagem.");
-        }
-    };
-
-    function isValidForm() {
-        const isValidFields =
-            !isNullOrEmpty(formData.name) && !isNullOrEmpty(formData.email);
-        return isValidFields && isChallengeCompleted;
-    }
-
+  
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        if (!isValidForm()) {
-            setMessage("Por favor, preencha os campos e o reCAPTCHA.");
-            return;
+      
+        if (!isChallengeCompleted) {
+            setStatusText("⚠️ Por favor, marque a caixa 'Não sou um robô'.");
+            return; 
         }
 
-        setChallengeCompleted(false);
-        setMessage("Enviando...");
+        setStatusText("Enviando...");
 
         try {
-            await handleSendEmail();
-            resetFields();
+            
+            const response = await fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, message }), 
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao enviar mensagem.");
+            }
+
+         
+            setStatusText("✅ Mensagem enviada com sucesso!");
+            setEmail("");
+            setMessage("");
+            
+   
+            setChallengeCompleted(false);
             recaptchaRef.current?.reset();
-            setMessage("Mensagem enviada com sucesso!");
+
         } catch (error) {
-            setMessage("Erro ao enviar a mensagem. Tente novamente.");
+            setStatusText("❌ Ocorreu um erro ao enviar. Tente novamente.");
             console.error(error);
         }
     }
+
 
     function handleCompleteChallenge(token: string | null) {
         if (!token) {
             setChallengeCompleted(false);
             return;
         }
-
         setChallengeCompleted(true);
-        setMessage("");
+        setStatusText(""); 
     }
 
+  
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>
-                    Nome:
-                    <input
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                        }
-                    />
-                </label>
+        <form onSubmit={handleSubmit} className="contact-form">
+            <div className="input-group">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Seu melhor Email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
             </div>
-            <div>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) =>
-                            setFormData({ ...formData, email: e.target.value })
-                        }
-                    />
-                </label>
+
+            <div className="input-group">
+                <textarea
+                    id="message"
+                    placeholder="Motivo do contato. Ex: Gostei muito do produto X, poderia me enviar um orçamento?"
+                    required
+                    rows={3}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                ></textarea>
             </div>
-            <div>
+
+         
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
                 <ReCAPTCHA
                     ref={recaptchaRef}
                     sitekey={"6LfwjjUtAAAAAPaC_k2uvK6Eag7Y7NnCvXDPQaXD"}
                     onChange={handleCompleteChallenge}
                 />
             </div>
-            <button type="submit">Enviar</button>
-            {message && <p>{message}</p>}
+
+          
+            {statusText && (
+                <p style={{ 
+                    textAlign: "center", 
+                    marginTop: "1rem", 
+                    fontWeight: "bold",
+                    color: statusText.includes("⚠️") || statusText.includes("❌") ? "#ef4444" : "#22c55e" 
+                }}>
+                    {statusText}
+                </p>
+            )}
+
+            
+            <div className="btn-container">
+                <Button text="Enviar" type="submit" />
+            </div>
         </form>
     );
 };

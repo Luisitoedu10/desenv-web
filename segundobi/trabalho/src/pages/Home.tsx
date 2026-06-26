@@ -457,37 +457,7 @@ export default function Home() {
                         personalizado.
                     </p>
                 </header>
-
-                <div className="contact-content">
-                    <form onSubmit={sendContactEmail} className="contact-form">
-                        <div className="input-group">
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Seu melhor Email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <textarea
-                                id="message"
-                                placeholder="Motivo do contato. Ex: Gostei muito do produto X, poderia me enviar um orçamento?"
-                                required
-                                rows={3}
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                            ></textarea>
-                        </div>
-
-                        <div className="btn-container">
-                            <Button text="Enviar" type="submit" />
-                        </div>
-                    </form>
-                    <ContactForm />
-                </div>
+                <ContactForm />
             </section>
             <footer id="footer">
                 <div className="container footer-top">
