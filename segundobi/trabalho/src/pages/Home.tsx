@@ -33,6 +33,26 @@ export default function Home() {
         }
     }, [showMobileMenu]);
 
+    // Valores para capturar dados dos inputs
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
+    async function sendContactEmail() {
+        const response = await fetch("/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email,
+                message,
+            }),
+        });
+
+        if (!response.ok) {
+            const body = await response.json().catch(() => ({}));
+            throw new Error(body.error ?? "Erro ao enviar mensagem.");
+        }
+    }
+
     return (
         <>
             <header className="container py-sm">
